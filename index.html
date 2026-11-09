@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a1d" />
+  <link rel="icon" href="data:," />
+  <title>Neon Coast — Last Run</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell" aria-label="Neon Coast game">
+    <canvas id="game" aria-label="Game world"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">N</span><span>NEON<span class="brand-light">COAST</span></span></div>
+      <div class="district"><span class="live-dot"></span><span id="district-name">SUNSET DISTRICT</span><span class="district-sep">/</span><span class="weather">☀ 28°</span></div>
+      <div class="top-actions"><div class="fps"><span class="live-dot"></span><span id="fps">60</span> FPS</div><button class="icon-btn" id="sound-btn" aria-label="Toggle sound">♫</button><button class="icon-btn" id="pause-btn" aria-label="Pause">Ⅱ</button></div>
+    </header>
+    <section class="mission-card" id="mission-card">
+      <div class="eyebrow"><span class="eyebrow-line"></span> ACTIVE CONTRACT <span class="contract-tag">01</span></div>
+      <div class="mission-title">CLEAR THE<br><em>BLOCK</em></div>
+      <div class="mission-copy">Take back the boardwalk. Stay alive.</div>
+      <div class="mission-progress"><div class="progress-track"><i id="mission-progress"></i></div><span id="mission-count">0 / 6</span></div>
+      <div class="mission-reward"><span>✦</span> <b>+1,200</b> <small>CR</small><span class="reward-divider"></span><span class="mission-xp">XP +240</span></div>
+    </section>
+    <aside class="map-card"><canvas id="minimap" width="180" height="180"></canvas><div class="map-caption"><span>LIVE MAP</span><span class="map-scale">N ↑</span></div></aside>
+    <div class="right-rail"><div class="stat-chip"><span class="stat-icon">⌖</span><span id="kill-count">00</span><small>ELIMS</small></div><div class="stat-chip"><span class="stat-icon coins">◈</span><span id="credits">000</span><small>CREDITS</small></div></div>
+    <section class="player-panel">
+      <div class="player-avatar"><span>R</span><i></i></div>
+      <div class="player-info"><div class="player-name">ROOK <span>LV. 08</span></div><div class="player-sub">COAST RUNNER <span>·</span> SEASON 04</div><div class="health-row"><span class="health-label">HP</span><div class="health-track"><i id="health-fill"></i></div><b id="health-value">100</b></div></div>
+      <div class="armor-block"><span>ARMOR</span><b id="armor-value">65</b><div class="armor-track"><i id="armor-fill"></i></div></div>
+    </section>
+    <section class="weapon-panel"><div class="weapon-top"><div class="weapon-class"><span class="weapon-dot"></span> ASSAULT RIFLE <span class="weapon-level">MK. II</span></div><div class="weapon-switch">556 <span>CALIBER</span></div></div><div class="weapon-main"><div class="weapon-name">VORTEX <span>556</span></div><div class="ammo"><strong id="ammo-current">30</strong><span>/</span><small id="ammo-reserve">120</small></div></div><div class="weapon-bottom"><div class="ammo-track" id="ammo-track"></div><span class="reload-hint">R <small>RELOAD</small></span><span class="fire-mode">AUTO <i></i></span></div></section>
+    <div class="crosshair" id="crosshair"><i></i><i></i><i></i><i></i><b></b></div>
+    <div class="toast" id="toast"></div>
+    <div class="hit-marker" id="hit-marker">✕</div>
+    <div class="damage-vignette" id="damage-vignette"></div>
+    <div class="mobile-controls" id="mobile-controls"><div class="stick-zone" id="stick-zone"><div class="stick-base"><div class="stick-knob" id="stick-knob"></div></div><span class="stick-label">MOVE</span></div><button class="touch-button jump-button" id="jump-btn">↗<small>SPRINT</small></button><button class="touch-button enter-button" id="enter-btn">↗<small>ENTER</small></button><button class="touch-button fire-button" id="fire-btn"><span>✦</span><small>FIRE</small></button><button class="touch-button reload-button" id="reload-btn">↻<small>RELOAD</small></button><div class="aim-pad" id="aim-pad"><span>AIM</span><div class="aim-knob"></div></div></div>
+    <div class="interaction-prompt" id="interaction-prompt"></div>
+    <div class="objective-banner" id="objective-banner"><span class="banner-star">✦</span><span><b>BLOCK SECURED</b><small>Contract complete · +1,200 CR</small></span><span class="banner-xp">+240 XP</span></div>
+    <section class="overlay" id="start-overlay"><div class="overlay-glow"></div><div class="start-content"><div class="season-line"><span>NEON COAST</span><i></i> OPEN CITY / SEASON 04</div><h1>LAST<br><em>RUN.</em></h1><p class="start-lead">ONE CITY. SIX TARGETS.<br><b>MAKE YOUR OWN EXIT.</b></p><div class="start-details"><span><b>01</b><small>BOARDWALK</small></span><i></i><span><b>06</b><small>HOSTILES</small></span><i></i><span><b>∞</b><small>WAYS OUT</small></span></div><button id="start-btn" class="primary-btn">DROP IN <span>↗</span></button><div class="control-tip"><span>WASD</span> MOVE <i>·</i> <span>MOUSE</span> AIM + FIRE <i>·</i> <span>E</span> ENTER VEHICLE</div></div><div class="overlay-aside"><div class="radar-rings"></div><div class="aside-coordinates">25°46′N<br>80°11′W</div><span class="aside-label">VICE CITY COASTLINE</span></div><div class="overlay-bottom"><span>SEASON 04 <i>—</i> THE HEAT IS ON</span><span>© NC STUDIOS <i>·</i> 2025</span></div></section>
+    <section class="overlay pause-overlay hidden" id="pause-overlay"><div class="pause-box"><div class="eyebrow">FIELD PAUSED</div><h2>TAKE A<br><em>BREATHER.</em></h2><p>The city isn't going anywhere.</p><button id="resume-btn" class="primary-btn">BACK IN <span>↗</span></button><button id="restart-btn" class="text-btn">RESTART CONTRACT</button></div></section>
+    <div class="toast-stack" id="toast-stack"></div>
+    <footer class="bottom-hint"><span>ZONE SAFE <i></i></span><span>● LIVE SESSION <b>01:24</b></span><span>NC / 2049</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
